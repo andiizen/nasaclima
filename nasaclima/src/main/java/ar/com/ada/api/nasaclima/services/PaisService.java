@@ -2,51 +2,53 @@ package ar.com.ada.api.nasaclima.services;
 
 import java.util.*;
 
+import ar.com.ada.api.nasaclima.entities.*;
+import ar.com.ada.api.nasaclima.repositories.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ar.com.ada.api.nasaclima.entities.Pais;
-import ar.com.ada.api.nasaclima.repos.PaisRepository;
-
 @Service
 public class PaisService {
+
     @Autowired
-    PaisRepository repo;
+    PaisRepository paisRepo;
 
-    // Creacion de un pais
-    public void crearPais(Pais pais) {
-        repo.save(pais);
+    public void crearPais(int codigoPais, String nombre) {
+
+        Pais pais = new Pais();
+
+        pais.setCodigoPais(codigoPais);
+        pais.setNombre(nombre);
+
+        this.grabar(pais);
 
     }
 
-    // Lista de paises sin temperaturas
+    public void grabar(Pais pais) {
+        paisRepo.save(pais);
+    }
+
     public List<Pais> listarPaises() {
-
-        return repo.findAll();
-
+        return paisRepo.findAll();
     }
 
-    // Info particular de un pais.
+    public Pais buscarPorId(int codigoPais) {
 
-    public Pais devolverPaisPorId(int codigoPais) {
+        Optional<Pais> pais = paisRepo.findById(codigoPais);
 
-        Optional<Pais> cOptional = repo.findById(codigoPais);
-
-        if (cOptional.isPresent()) {
-
-            return cOptional.get();
-
+        if (pais.isPresent()) {
+            return pais.get();
         }
         return null;
-    }
 
-    // Actualizar nombre pais
+    }
 
     public void actualizarNombrePais(Pais paisOriginal, String nombre) {
 
         paisOriginal.setNombre(nombre);
 
-        //hasta aca llegué
+        this.grabar(paisOriginal);
 
     }
 

@@ -1,17 +1,20 @@
 package ar.com.ada.api.nasaclima.entities;
 
 import java.util.*;
+
 import javax.persistence.*;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "pais")
 public class Pais {
+
     @Id
     @Column(name = "codigo_pais")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int codigoPais;
     private String nombre;
+
     @OneToMany(mappedBy = "pais", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Temperatura> temperaturas;

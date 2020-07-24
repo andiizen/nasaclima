@@ -1,7 +1,8 @@
 package ar.com.ada.api.nasaclima.entities;
 
-import java.math.BigDecimal;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "temperatura")
@@ -10,12 +11,12 @@ public class Temperatura {
     @Column(name = "temperatura_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int temperaturaId;
-    private int año;
-    private BigDecimal grados;
-    @Column(name = "codigo_pais")
-    private int codigoPais;
+    private int anio;
+    private double grados;
+
     @ManyToOne
     @JoinColumn(name = "codigo_pais", referencedColumnName = "codigo_pais")
+    @JsonIgnore
     private Pais pais;
 
     public int getTemperaturaId() {
@@ -26,28 +27,20 @@ public class Temperatura {
         this.temperaturaId = temperaturaId;
     }
 
-    public int getAño() {
-        return año;
+    public int getAnio() {
+        return anio;
     }
 
-    public void setAño(int año) {
-        this.año = año;
+    public void setAnio(int anio) {
+        this.anio = anio;
     }
 
-    public BigDecimal getGrados() {
+    public Double getGrados() {
         return grados;
     }
 
-    public void setGrados(BigDecimal grados) {
+    public void setGrados(double grados) {
         this.grados = grados;
-    }
-
-    public int getCodigoPais() {
-        return codigoPais;
-    }
-
-    public void setCodigoPais(int codigoPais) {
-        this.codigoPais = codigoPais;
     }
 
     public Pais getPais() {
