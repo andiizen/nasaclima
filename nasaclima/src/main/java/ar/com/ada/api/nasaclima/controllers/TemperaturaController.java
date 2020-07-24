@@ -39,7 +39,7 @@ public class TemperaturaController {
 
         } else {
             res.isOk = false;
-            res.message = "Error";
+            res.message = "Ya se ha cargado una temperatura en el año especificado";
 
             return ResponseEntity.badRequest().body(res);
         }
